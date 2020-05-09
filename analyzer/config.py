@@ -22,7 +22,7 @@ try:
     PORT = int(config.get('ANALYZER', 'PORT'))
     PGSQL_HOST = '127.0.0.1'
     PGSQL_PORT = 5432
-    PGSQL_DB = 'xuange_nids'
+    PGSQL_DB = 'xuange_idsbodl'
     PGSQL_USER = 'postgres'
     PGSQL_PASSWD = 'xuange'
     engine = create_engine("postgresql+psycopg2://%s:%s@%s:%s/%s" % (PGSQL_USER, PGSQL_PASSWD, PGSQL_HOST, PGSQL_PORT, PGSQL_DB), pool_size=30, max_overflow=0)

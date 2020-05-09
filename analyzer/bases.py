@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class Users(Base):
+class User(Base):
     def __init__(self):
         super.__init__(self)
     
