@@ -7,7 +7,6 @@ import time
 import asyncio
 import libpcap as pcap
 import ctypes as ct
-sys.path.append('..')
 from config import device
 from log import info, success, debug, warning, error  
 
@@ -37,7 +36,7 @@ def handle_data(q_id_pointer, hdr, pkt):
     debug(f"c: caplen: {hdr.contents.caplen}")
     debug(f"c: len: {hdr.contents.len}")
     data = ct.string_at(pkt, hdr.contents.caplen)
-    debug(f'data:{data}')
+    #debug(f'data:{data}')
     if q:
         q.put_nowait(data)
         debug(f'c: q.put done: {q.qsize()}')

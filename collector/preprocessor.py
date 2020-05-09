@@ -8,13 +8,11 @@ import json
 import uuid
 import base64
 import asyncio
-import configparser
 from scapy.all import *
-sys.path.append('..')
 from config import srvs, sfandds
 from config import UDP_TIMEOUT, TCP_TIMEOUT, HOST, PORT
 from log import info, success, debug, warning, error, err_exp
-from exception.handle import handle_exception
+from handle import handle_exception
 
 
 time_pool = asyncio.Queue()
@@ -43,10 +41,14 @@ async def send(send_q):
     info(f'time_pool: send start')
     # Establish connection with analyzer
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    ssl_context.load_verify_locations('../cert/cacert.pem')
+    ssl_context.load_verify_locations('./cert/cacert.pem')
     ssl_context.check_hostname = False
     loop = asyncio.get_running_loop()
-    reader, writer = await asyncio.open_connection(HOST, PORT, ssl=ssl_context)
+    writer = None
+    try:
+        reader, writer = await asyncio.open_connection(HOST, PORT, ssl=ssl_context)
+    except ConnectionRefusedError as e:
+        error(f'Failed to connect to analyzer server. ')
     while True:
         try:
             debug(f'time_pool: wait for send_q.get() = {send_q.qsize()}')
@@ -63,10 +65,18 @@ async def send(send_q):
             time_pool.put_nowait(data)
             s_end += 1
             debug(f'time_pool: t_size: {time_pool.qsize()}, s_end: {s_end}')
+            while not writer:
+                try:
+                    await asyncio.sleep(5)
+                    reader, writer = await asyncio.open_connection(HOST, PORT, ssl=ssl_context)
+                except ConnectionRefusedError as e:
+                    error(f'Try to connect to the analyzer server. ')
             writer.write(json.dumps(data).encode())
         except KeyboardInterrupt:
-            writer.write(b'exit}')
-            writer.close()
+            if writer:
+                writer.write(b'exit}')
+                writer.close()
+            return
 
 
 async def processing(data, tcp_qs, udp_qs, send_q):
@@ -101,6 +111,7 @@ async def ip_processing(ip_layer, tcp_qs, udp_qs, send_q):
 async def tcps_processing(tcp_layer, tcp_qs, send_q):
     debug(f'p: is tcp protocol')
     debug(f'p: tcp_flag: {str(tcp_layer.flags)}, tcp_qs: {tcp_qs}')
+    # The communication service of this program is skipped to avoid death cycle.
     if tcp_layer.underlayer.dst == HOST and tcp_layer.dport == PORT:
         return
     tpuid = tcp_layer.underlayer.src + ':' + str(tcp_layer.sport) + '-' + tcp_layer.underlayer.dst + ':' + str(tcp_layer.dport)
@@ -109,6 +120,7 @@ async def tcps_processing(tcp_layer, tcp_qs, send_q):
         tpuid = tcp_layer.underlayer.dst + ':' + str(tcp_layer.dport) + '-' + tcp_layer.underlayer.src + ':' + str(tcp_layer.sport)
         tmp = tcp_qs.get(tpuid)
     if not tmp:
+        # Create a new subprocess to track this new TCP connection.
         debug(f'p: new TCP.')
         tcp_qs[tpuid] = asyncio.Queue()
         tcp_qs[tpuid].put_nowait(tcp_layer)
@@ -232,7 +244,6 @@ async def tcp_processing(tpuid, tcp_qs, send_q, status={'seq': 1, 'flag': 0}, da
 
 async def udps_processing(udp_layer, udp_qs, send_q):
     debug(f'p: is udp protocol')
-    debug(f'p: udp_qs: {udp_qs}')
     upuid = udp_layer.underlayer.src + ':' + str(udp_layer.sport) + '-' + udp_layer.underlayer.dst + ':' + str(udp_layer.dport)
     tmp = udp_qs.get(upuid)
     if not tmp:
@@ -328,7 +339,6 @@ async def fin_processing(data=None, uid=None, qs=None, send_q=None):
     except:
         pass
     if not data.get('time'):
-        #error('aaa')
         data['time'] = Ether(base64.b64decode(data['data'][0])).time
     if not data.get('service'):
         data['service'] = await get_service_by_port(int(data['dport']))
@@ -445,8 +455,8 @@ async def fin_processing(data=None, uid=None, qs=None, send_q=None):
     send_q.put_nowait(data)
     debug(f'p: send_q.qsize() = {send_q.qsize()}')
     # sava data_list to local.
-    with open('../data/' + data['data_number'], 'w') as f:
-        f.write(json.dumps(data_list))
+    # with open('../data/' + data['data_number'], 'w') as f:
+    #     f.write(json.dumps(data_list))
 
 
 # start

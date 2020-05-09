@@ -5,7 +5,6 @@
 import sys
 import asyncio
 import datetime
-sys.path.append('..')
 from config import ALARM_WHITE_LIST, DB_SESSION
 from alarm_manager import send_alarm
 from bases import Nids_data, Nids_protocol_type, Nids_service, Nids_flag, Nids_label
@@ -26,14 +25,13 @@ async def controller(q=None):
                 if label not in ALARM_WHITE_LIST:
                     await send_alarm(data)
                 # insert db
-                error(f'{data["time"]}--type{type(data["time"])}')
                 data['time'] = datetime.datetime.fromtimestamp(data['time'])
                 error(Nids_data(**data).to_dict())
                 #db_session.add()
                 #db_session.commit()
         except Exception as e:
             error(e)
-            pass
+            return
 
 
 if __name__ == '__main__':
