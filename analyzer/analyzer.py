@@ -40,7 +40,7 @@ async def recv_data(reader, writer):
                 writer.close()
                 return
         except ConnectionResetError as e:
-            warnin/(f'a: {address}: Connection Reset Error!')
+            warning(f'a: {address}: Connection Reset Error!')
             return
         except asyncio.streams.IncompleteReadError as e:
             info(f"a: {address}: The customer's office has closed the connection.")
@@ -85,7 +85,7 @@ async def analyzer(host, port, q=None):
             ca_q = q
             info(f'a: set ca_q success.')
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain('../cert/cacert.pem', '../cert/privkey.pem', 'e3fb285c6276363050fc73b05ea7f0a1')
+        ssl_context.load_cert_chain('./cert/cacert.pem', './cert/privkey.pem', 'e3fb285c6276363050fc73b05ea7f0a1')
         await load_model()
         server = await asyncio.start_server(recv_data, host, port, ssl=ssl_context)
         info(f'a: starting server on {host}:{port}')
@@ -94,8 +94,9 @@ async def analyzer(host, port, q=None):
         #     debug(f'aaa')
         await server.serve_forever()
     except Exception as e:
-        error(f'a: {e}')
-        err_exp(e)
+        if str(e) != '':
+            error(f"c: while filed: {e}")
+            err_exp(e)
 
 
 if __name__ == '__main__':

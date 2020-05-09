@@ -9,6 +9,7 @@ import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from log import error, info
+from bases import Nids_protocol_type, Nids_service, Nids_flag, Nids_label
 
 
 CONFIG_FILE = './config.cfg'
@@ -16,19 +17,20 @@ CONFIG_FILE = './config.cfg'
 
 config = configparser.RawConfigParser()
 config.read(CONFIG_FILE)
-# device
+# base
 try:
     HOST = config.get('ANALYZER', 'HOST')
     PORT = int(config.get('ANALYZER', 'PORT'))
-    PGSQL_HOST = '127.0.0.1'
-    PGSQL_PORT = 5432
-    PGSQL_DB = 'xuange_idsbodl'
-    PGSQL_USER = 'postgres'
-    PGSQL_PASSWD = 'xuange'
+    PGSQL_HOST = config.get('ANALYZER', 'DB_HOST')
+    PGSQL_PORT = config.get('ANALYZER', 'DB_PORT')
+    PGSQL_DB = config.get('ANALYZER', 'DB_NAME')
+    PGSQL_USER = config.get('ANALYZER', 'DB_USER')
+    PGSQL_PASSWD = config.get('ANALYZER', 'DB_PASSWD')
     engine = create_engine("postgresql+psycopg2://%s:%s@%s:%s/%s" % (PGSQL_USER, PGSQL_PASSWD, PGSQL_HOST, PGSQL_PORT, PGSQL_DB), pool_size=30, max_overflow=0)
     DB_SESSION = sessionmaker(bind=engine)
 except Exception as e:
     error(f"cfg: configuration error: {e}")
+
 
 # model
 MODEL_PATH = 'model/1588223660'

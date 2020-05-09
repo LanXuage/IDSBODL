@@ -57,6 +57,9 @@ class NidsFlags(models.Model):
         managed = False
         db_table = 'nids_flags'
 
+    def __str__(self):
+        return self.flag_name
+
 
 class NidsLabels(models.Model):
     label_name = models.CharField(max_length=45)
@@ -64,6 +67,9 @@ class NidsLabels(models.Model):
     class Meta:
         managed = False
         db_table = 'nids_labels'
+
+    def __str__(self):
+        return self.label_name
 
 
 class NidsProtocolTypes(models.Model):
@@ -73,6 +79,9 @@ class NidsProtocolTypes(models.Model):
         managed = False
         db_table = 'nids_protocol_types'
 
+    def __str__(self):
+        return self.protocol_name
+
 
 class NidsServices(models.Model):
     service_name = models.CharField(max_length=45)
@@ -80,6 +89,9 @@ class NidsServices(models.Model):
     class Meta:
         managed = False
         db_table = 'nids_services'
+
+    def __str__(self):
+        return self.service_name
 
 
 class Users(models.Model):

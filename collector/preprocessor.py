@@ -178,6 +178,11 @@ async def tcp_processing(tpuid, tcp_qs, send_q, status={'seq': 1, 'flag': 0}, da
                 if tcp_layer.underlayer.dst == data['dst']:
                     data['flag'] = 'RSTRH'
             await fin_processing(data, tpuid, tcp_qs, send_q)
+            start_time = status.get('start_time')
+            if start_time:
+                data['duration'] = int(tcp_layer.time - status['start_time'])
+            else:
+                data['duration'] = 0
             return
         elif tcp_layer.flags.value == 0b10010:
             debug(f'p: is synAck.')
@@ -230,6 +235,11 @@ async def tcp_processing(tpuid, tcp_qs, send_q, status={'seq': 1, 'flag': 0}, da
             else:
                 if tcp_layer.underlayer.src == data['src']:
                     data['flag'] = 'SHR'
+                    start_time = status.get('start_time')
+                    if start_time:
+                        data['duration'] = int(tcp_layer.time - status['start_time'])
+                    else:
+                        data['duration'] = 0
                     await fin_processing(data, tpuid, tcp_qs, send_q)
                     return
         else:
