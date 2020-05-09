@@ -2,8 +2,8 @@
 #coding:utf-8
 import datetime
 
-from sqlalchemy import Column, String, Integer, BigInteger, DateTime, Text
-from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION
+from sqlalchemy import Column 
+from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, INTEGER, VARCHAR, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -16,11 +16,11 @@ class Users(Base):
     
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String(45))
-    password = Column(String(45))
-    email = Column(String(45))
-    phone = Column(String(45))
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    username = Column(VARCHAR(45))
+    password = Column(VARCHAR(45))
+    email = Column(VARCHAR(45))
+    phone = Column(VARCHAR(45))
 
     def to_dict(self):
         return {
@@ -36,10 +36,10 @@ class Nids_protocol_type(Base):
     def __init__(self):
         super.__init__(self)
     
-    __tablename__ = 'nids_protocol_type'
+    __tablename__ = 'nids_protocol_types'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    protocol_name = Column(String(45))
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    protocol_name = Column(VARCHAR(45))
 
     def to_dict(self):
         return {
@@ -52,10 +52,10 @@ class Nids_service(Base):
     def __init__(self):
         super.__init__(self)
     
-    __tablename__ = 'nids_service'
+    __tablename__ = 'nids_services'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    service_name = Column(String(45))
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    service_name = Column(VARCHAR(45))
 
     def to_dict(self):
         return {
@@ -68,10 +68,10 @@ class Nids_flag(Base):
     def __init__(self):
         super.__init__(self)
     
-    __tablename__ = 'nids_flag'
+    __tablename__ = 'nids_flags'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    flag_name = Column(String(45))
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    flag_name = Column(VARCHAR(45))
 
     def to_dict(self):
         return {
@@ -84,10 +84,10 @@ class Nids_label(Base):
     def __init__(self):
         super.__init__(self)
     
-    __tablename__ = 'nids_label'
+    __tablename__ = 'nids_labels'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    label_name = Column(String(45))
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    label_name = Column(VARCHAR(45))
 
     def to_dict(self):
         return {
@@ -101,27 +101,27 @@ class Nids_data(Base):
         self.__dict__.update(entries)
 
     # Tablename
-    __tablename__ = 'nids_data'
+    __tablename__ = 'nids_datas'
 
 
     # Table structure
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    src = Column(String(45))
-    dst = Column(String(45))
-    sport = Column(Integer)
-    dport = Column(Integer)
-    fk_nids_protocol_type_id = Column(Integer)
-    urgent = Column(Integer)
-    hot = Column(Integer)
-    src_bytes = Column(BigInteger)
-    dst_bytes = Column(BigInteger)
-    data_number = Column(String(45))
-    fk_nids_service_id = Column(Integer)
-    fk_nids_flag_id = Column(Integer)
-    duration = Column(Integer)
-    time = Column(DateTime)
-    count = Column(Integer)
-    srv_count = Column(Integer)
+    id = Column(INTEGER, primary_key=True, autoincrement=True)
+    src = Column(VARCHAR(45))
+    dst = Column(VARCHAR(45))
+    sport = Column(INTEGER)
+    dport = Column(INTEGER)
+    fk_nids_protocol_type_id = Column(INTEGER)
+    urgent = Column(INTEGER)
+    hot = Column(INTEGER)
+    src_bytes = Column(BIGINT)
+    dst_bytes = Column(BIGINT)
+    data_number = Column(VARCHAR(45))
+    fk_nids_service_id = Column(INTEGER)
+    fk_nids_flag_id = Column(INTEGER)
+    duration = Column(INTEGER)
+    time = Column(TIMESTAMP)
+    count = Column(INTEGER)
+    srv_count = Column(INTEGER)
     serror_rate = Column(DOUBLE_PRECISION)
     rerror_rate = Column(DOUBLE_PRECISION)
     same_srv_rate = Column(DOUBLE_PRECISION)
@@ -129,8 +129,8 @@ class Nids_data(Base):
     srv_serror_rate = Column(DOUBLE_PRECISION)
     srv_rerror_rate = Column(DOUBLE_PRECISION)
     srv_diff_host_rate = Column(DOUBLE_PRECISION)
-    dst_host_count = Column(Integer)
-    dst_host_srv_count = Column(Integer)
+    dst_host_count = Column(INTEGER)
+    dst_host_srv_count = Column(INTEGER)
     dst_host_same_srv_rate = Column(DOUBLE_PRECISION)
     dst_host_diff_srv_rate = Column(DOUBLE_PRECISION)
     dst_host_same_src_port_rate = Column(DOUBLE_PRECISION)
@@ -139,8 +139,8 @@ class Nids_data(Base):
     dst_host_srv_diff_host_rate = Column(DOUBLE_PRECISION)
     dst_host_srv_serror_rate = Column(DOUBLE_PRECISION)
     dst_host_srv_rerror_rate = Column(DOUBLE_PRECISION)
-    fk_nids_label_id = Column(Integer)
-    capture_date = Column(DateTime, default=datetime.datetime.utcnow)
+    fk_nids_label_id = Column(INTEGER)
+    capture_date = Column(TIMESTAMP, default=datetime.datetime.utcnow)
 
     def to_dict(self):
         return {
