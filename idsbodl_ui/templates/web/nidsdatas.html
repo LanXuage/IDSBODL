@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+ 
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+ 
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+ 
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>数据管理</title>
+<style>
+    body {
+        background-color: rgb(250, 250, 250);
+    }
+</style>
+</head>
+ 
+<body>
+    <nav class="navbar navbar-expand-md  bg-secondary navbar-dark">
+        <a class="navbar-brand" href="#"><h2>IDSBODL</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">概览</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">实时监控</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">用户管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">数据管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">模型管理</a>
+                </li>
+            </ul>
+        </div> 
+    </nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">IDSBODL</li>
+        <li class="breadcrumb-item active">数据管理</li>
+    </ol>
+    <div class="table-responsive" style="font-size: 10px;">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="" id=""></th>
+                    <th>id</th>
+                    <th>src</th>
+                    <th>dst</th>
+                    <th>sport</th>
+                    <th>dport</th>
+                    <th>ptype</th>
+                    <th>urgent</th>
+                    <th>hot</th>
+                    <th>sb</th>
+                    <th>db</th>
+                    <th>service</th>
+                    <th>flag</th>
+                    <th>dur</th>
+                    <th>count</th>
+                    <th>scount</th>
+                    <th>ser</th>
+                    <th>rer</th>
+                    <th>ssr</th>
+                    <th>dsr</th>
+                    <th>sser</th>
+                    <th>srer</th>
+                    <th>sdhr</th>
+                    <th>dhc</th>
+                    <th>dhsc</th>
+                    <th>dhssr</th>
+                    <th>dhdsr</th>
+                    <th>dhsspr</th>
+                    <th>dhser</th>
+                    <th>dhrer</th>
+                    <th>dhsdhr</th>
+                    <th>dhsser</th>
+                    <th>dhsrer</th>
+                    <th>cdate</th>
+                    <th>time</th>
+                    <th>label</th>
+                </tr>
+            </thead>
+            <tbody>
+		{% for nidsdata in NidsDatas %}
+                <tr>
+		    <td><input type="checkbox" name="{{ nidsdata.id }}" id=""></td>
+		    <td>{{ nidsdata.id }}</td>
+		    <td>{{ nidsdata.src }}</td>
+		    <td>{{ nidsdata.dst }}</td>
+		    <td>{{ nidsdata.sport }}</td>
+		    <td>{{ nidsdata.dport }}</td>
+		    <td>{{ nidsdata.fk_nids_protocol_type }}</td>
+		    <td>{{ nidsdata.urgent }}</td>
+		    <td>{{ nidsdata.hot }}</td>
+		    <td>{{ nidsdata.src_bytes }}</td>
+		    <td>{{ nidsdata.dst_bytes }}</td>
+		    <td>{{ nidsdata.fk_nids_service }}</td>
+		    <td>{{ nidsdata.fk_nids_flag }}</td>
+		    <td>{{ nidsdata.duration }}</td>
+		    <td>{{ nidsdata.count }}</td>
+		    <td>{{ nidsdata.srv_count }}</td>
+		    <td>{{ nidsdata.serror_rate }}</td>
+		    <td>{{ nidsdata.rerror_rate }}</td>
+		    <td>{{ nidsdata.same_srv_rate }}</td>
+		    <td>{{ nidsdata.diff_srv_rate }}</td>
+		    <td>{{ nidsdata.srv_serror_rate }}</td>
+		    <td>{{ nidsdata.srv_rerror_rate }}</td>
+		    <td>{{ nidsdata.srv_diff_host_rate }}</td>
+		    <td>{{ nidsdata.dst_host_count }}</td>
+		    <td>{{ nidsdata.dst_host_srv_count }}</td>
+		    <td>{{ nidsdata.dst_host_same_srv_rate }}</td>
+		    <td>{{ nidsdata.dst_host_diff_srv_rate }}</td>
+		    <td>{{ nidsdata.dst_host_same_src_port_rate }}</td>
+		    <td>{{ nidsdata.dst_host_serror_rate }}</td>
+		    <td>{{ nidsdata.dst_host_rerror_rate }}</td>
+		    <td>{{ nidsdata.dst_host_srv_diff_host_rate }}</td>
+		    <td>{{ nidsdata.dst_host_srv_serror_rate }}</td>
+		    <td>{{ nidsdata.dst_host_srv_rerror_rate }}</td>
+		    <td>{{ nidsdata.capture_date }}</td>
+		    <td>{{ nidsdata.time }}</td>
+		    <td>{{ nidsdata.fk_nids_label }}</td>
+                </tr>
+		{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <ul class="m-auto justify-content-center pagination pagination-sm">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</body>
+ 
+</html>

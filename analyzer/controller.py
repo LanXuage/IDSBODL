@@ -48,7 +48,6 @@ async def controller(q=None):
                     nids_data.fk_nids_label_id = tmp[0]
                 else:
                     raise Exception(f'Not "{data.get("label")}" protocol type in databases. ')
-                error(nids_data.to_dict())
                 db_sess.add(nids_data)
                 db_sess.commit()
         except Exception as e:

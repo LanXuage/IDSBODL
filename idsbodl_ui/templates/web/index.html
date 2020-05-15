@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+ 
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+ 
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+ 
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>主页</title>
+<style>
+    body {
+        background-color: rgb(250, 250, 250);
+    }
+    .next-card {
+        padding: 15px;
+        background-color: #FFF;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,.13);
+        border: 1px solid transparent;
+    }
+    .next-card-title-font {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .bt {
+        font-size: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+        background-color: rgb(250, 250, 250);
+        margin-left: 5px;
+    }
+    .bt:hover {
+        border: 1px solid #000;
+        text-decoration: none;
+        color: black;
+        transition: 0.8s;
+        -webkit-transition: 0.8s;/*Safari 和 Chrome:*/
+    }
+</style>
+</head>
+ 
+<body>
+    <nav class="navbar navbar-expand-md  bg-secondary navbar-dark">
+        <a class="navbar-brand" href="#"><h2>IDSBODL</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" href="">概览</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/monitoring">实时监控</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">用户管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/nidsdatas">数据管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">模型管理</a>
+                </li>
+            </ul>
+        </div> 
+    </nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">IDSBODL</li>
+        <li class="breadcrumb-item active">概览</li>
+    </ol>
+    <div class="container">
+        <div class="row">
+            <div class="next-card mt-3 col-12 col-md-5" style="width: 100%;">
+                <div class="container">
+                    <div class="row"><div class="next-card-title-font col-4">我的系统</div></div><br>
+                    <div class="row">
+                        <div class="col-4">
+                            数据采集器
+                        </div>
+                        <div class="col-4">
+                            分析管理器
+                        </div>
+                        <div class="col-4">
+                            预警处理器
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-4">
+			    <a href="#" style="font-size: 25px;">{{ Collector_count }}</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-card ml-0 ml-md-3 mt-3 col-12 col-md-6" style="width: 100%;">
+                <div class="container">
+                    <div class="row"><div class="next-card-title-font col-5">快速入口</div></div><br>
+                    <div class="row">
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">添加用户</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">创建用户组</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">添加服务</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">服务管理</a>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">添加攻击</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">添加模型</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">模型训练</a>
+                        </div>
+                        <div class="col-3" style="padding: 0;">
+                            <a href="#" class="bt">数据管理</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-card mt-3 col-12 col-md-4" style="width: 100%;">
+                <div class="container">
+                    <div class="row"><div class="next-card-title-font col-5">我的用户</div></div><br>
+                    <div class="row">
+                        <div class="col-6">
+                            用户
+                        </div>
+                        <div class="col-6">
+                            用户组
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-6">
+			    <a href="#" style="font-size: 25px;">{{ Users_count }}</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-card ml-3 mt-3 col-12 col-md-7" style="width: 100%;">
+                <div class="container">
+                    <div class="row"><div class="next-card-title-font col-5">我的数据</div></div><br>
+                    <div class="row">
+                        <div class="col-4">
+                            连接数据
+                        </div>
+                        <div class="col-4">
+                            攻击类型
+                        </div>
+                        <div class="col-4">
+                            服务类型
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-4">
+			    <a href="#" style="font-size: 25px;">{{ NidsDatas_count }}</a>
+                        </div>
+                        <div class="col-4">
+			    <a href="#" style="font-size: 25px;">{{ NidsLabels_count }}</a>
+                        </div>
+                        <div class="col-4">
+			    <a href="#" style="font-size: 25px;">{{ NidsServices_count }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="next-card mt-3 col-11" style="width: 100%;">
+                <div class="container">
+                    <div class="row"><div class="next-card-title-font col-5">我的深度学习模型</div></div><br>
+                    <div class="row">
+                        <div class="col-4">
+                            模型
+                        </div>
+                        <div class="col-4">
+                            训练
+                        </div>
+                        <div class="col-4">
+                            待定
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-4">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="#" style="font-size: 25px;">0</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+ 
+</html>
